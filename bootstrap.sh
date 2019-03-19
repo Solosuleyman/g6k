@@ -25,23 +25,36 @@ EOF
 
 source g6k-env/bin/activate
 
-pip install -U pip
+#pip install -U pip
 
 # Install FPLLL
 
-git clone https://github.com/fplll/fplll
-cd fplll || exit
+git clone https://github.com/fplll/fplll --depth 1
+cd fplll 
+git fetch --unshallow|| exit
 ./autogen.sh
 ./configure --prefix="$VIRTUAL_ENV" $CONFIGURE_FLAGS
 make clean
-make -j 4
+make -j 10
 make install
 cd ..
 
 # Install FPyLLL
-git clone https://github.com/fplll/fpylll
-cd fpylll || exit
-pip install Cython
+git clone https://github.com/fplll/fpylll --depth 1
+cd fpylll 
+git fetch --unshallow||exit
+pip install Cython -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install numpy -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install cysignals -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install ipython -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install begins -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install pytest -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install requests -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install scipy -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install Sphinx -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install flake8 -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+pip install multiprocessing -i https://pypi.tuna.tsinghua.edu.cn/simple
 pip install -r requirements.txt
 pip install -r suggestions.txt
 python setup.py clean
@@ -49,7 +62,8 @@ python setup.py build_ext
 python setup.py install
 cd ..
 
-pip install -r requirements.txt
+pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install multiprocessing-logging -i https://pypi.tuna.tsinghua.edu.cn/simple
 python setup.py clean
 python setup.py build_ext --inplace
 
@@ -57,3 +71,4 @@ python setup.py build_ext --inplace
 
 rm -rf ./fplll
 rm -rf ./fpylll
+poweroff 
